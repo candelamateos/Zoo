@@ -5,8 +5,7 @@ class Mono(Animales):
         self.x = 0
         self.y = 0
         self.nombre = nombre
-        self.energia = 400
-        self.nacer()
+        self.energia = 75
         
     def info(self):
         print(self.nombre, self.energia)

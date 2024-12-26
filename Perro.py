@@ -1,3 +1,4 @@
+import pygame
 from enum import Enum
 from Animales import Animales
 
@@ -17,6 +18,7 @@ class Perro(Animales):
         self.color = color
         self.x = x
         self.y = y
+        self.imagen = pygame.image.load("perro.webp")
 
         # Asignación de la energía según la raza
         if self.raza.value == "labrador":
