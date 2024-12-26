@@ -41,6 +41,7 @@ class GameController:
                     running = False
 
             self.pantalla.fill(self.ROJO)
+            self.player.dibujar(self.pantalla)
             pygame.display.flip()
             time.sleep(0.1)
 

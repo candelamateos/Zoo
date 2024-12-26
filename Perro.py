@@ -12,13 +12,15 @@ class Raza(Enum):
 class Perro(Animales):
 
     # Inicializador de la clase Perro
-    def __init__(self, raza, nombre, color,x, y):
+    def __init__(self, raza, nombre, color, x, y):
         self.nombre = nombre
         self.raza = Raza(raza)
         self.color = color
-        self.x = x
-        self.y = y
         self.imagen = pygame.image.load("perro.webp")
+        self.imagen = pygame.transform.scale(self.imagen, (100, 100))
+        self.rect = self.imagen.get_rect()
+        self.rect.x =  x
+        self.rect.y = y
 
         # Asignación de la energía según la raza
         if self.raza.value == "labrador":
@@ -31,23 +33,12 @@ class Perro(Animales):
             self.energia = int(80)
 
     #Métodos heredados de la clase abstracta animal
-
+    def dibujar(self, pantalla):
+        pantalla.blit(self.imagen, self.rect)
     
     def morir(self):
         print("El perro", self.nombre, "ha muerto")
         
-        
-
-    # Método para simular el ladrido del perro
-    def ladrar(self):
-        print(self.nombre, "dice guau")
-        self.energia -= 5
-        
-    # Método para simular el movimiento del perro
-    def moverse(self):
-        print(self.nombre, "camina hacia delante")
-        self.energia -= 10
-
     # Método para mostrar la información del perro
     def info(self):
         print(self.nombre, self.raza.value, self.color, self.energia)
