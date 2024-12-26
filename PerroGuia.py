@@ -6,8 +6,6 @@ class PerroGuia(Perro):
     def __init__(self, raza, nombre, color, dueño):
         super().__init__(raza, nombre, color)
         self.__dueño = dueño
-
-
     
     # Método para mostrar la información del perro guía
     def info(self):
