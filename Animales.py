@@ -9,5 +9,3 @@ class Animales(ABC):
     @abstractmethod
     def atacar(self):
         pass
-    
-#hola
