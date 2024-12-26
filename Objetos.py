@@ -9,6 +9,9 @@ class Objetos:
         self.y = random.randint(0,9)
         self.jaula = jaula
         self.energia = energia
+    
+    def recoger(self):
+        self.energia = 0
         
 class Cocacola(Objetos):
     def __init__(self, x, y, jaula, energia):
