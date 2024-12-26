@@ -1,6 +1,6 @@
 Lógica del bucle del juego:
 
-    Draw //Pygame
+    Draw // Pygame
     User action // 1. Movemos, 2.atacamos (según la distancia),3. Cogemos energía o 4. nos quedamos quietos     
     Game action // 2. El enemigo nos ataca de vuelta (segun la distancia), 3 y 4 se acerca a nosotros
     Update // Todos los atributos se actualizan
