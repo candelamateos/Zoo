@@ -39,6 +39,12 @@ class GameController:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
+                
+                if event.type == pygame.VIDEORESIZE:
+                    nuevo_ancho = event.w
+                    nuevo_alto = event.h
+                    self.player.reescalar (nuevo_ancho // 8, nuevo_alto // 8)
+                    
 
             self.pantalla.fill(self.ROJO)
             self.player.dibujar(self.pantalla)

@@ -21,6 +21,7 @@ class Perro(Animales):
         self.rect = self.imagen.get_rect()
         self.rect.x =  x
         self.rect.y = y
+        self.reescalar(100, 100)
 
         # Asignación de la energía según la raza
         if self.raza.value == "labrador":
@@ -31,7 +32,11 @@ class Perro(Animales):
             self.energia = int(50)
         else:
             self.energia = int(80)
-
+            
+    def reescalar(self, ancho, alto):
+        self.imagen = pygame.image.load("perro.webp")
+        self.imagen = pygame.transform.smoothscale(self.imagen, (ancho, alto))
+        self.rect = self.imagen.get_rect(center=self.rect.center)
     #Métodos heredados de la clase abstracta animal
     def dibujar(self, pantalla):
         pantalla.blit(self.imagen, self.rect)
