@@ -37,8 +37,14 @@ class Perro(Animales):
         self.imagen = pygame.image.load("perro.webp")
         self.imagen = pygame.transform.smoothscale(self.imagen, (ancho, alto))
         self.rect = self.imagen.get_rect(center=self.rect.center)
+    
     #Métodos heredados de la clase abstracta animal
     def dibujar(self, pantalla):
+        new_width = pantalla.get_width() // 20
+        aspect_ratio = self.y/ self.x
+        new_height = int(new_width * aspect_ratio)
+        self.imagen = pygame.transform.scale(self.imagen, (new_width, new_height))
+
         pantalla.blit(self.imagen, self.rect)
     
     def morir(self):
