@@ -18,10 +18,9 @@ class Perro(Animales):
         self.color = color
         self.imagen = pygame.image.load("perro.webp")
         self.imagen = pygame.transform.scale(self.imagen, (100, 100))
-        self.rect = self.imagen.get_rect()
-        self.rect.x =  x
-        self.rect.y = y
-        self.reescalar(100, 100)
+        self.x = x
+        self.y = y
+        #self.reescalar(100, 100)
 
         # Asignación de la energía según la raza
         if self.raza.value == "labrador":
@@ -34,32 +33,34 @@ class Perro(Animales):
             self.energia = int(80)
             
     def reescalar(self, ancho, alto):
-        self.imagen = pygame.image.load("perro.webp")
+        ratio = self.y / self.x
+        nuevo_ancho = ancho // 8
+        nuevo_alto = int(ancho * ratio)
         self.imagen = pygame.transform.smoothscale(self.imagen, (ancho, alto))
-        self.rect = self.imagen.get_rect(center=self.rect.center)
     
-    #Métodos heredados de la clase abstracta animal
+        #Métodos heredados de la clase abstracta animal
     def dibujar(self, pantalla):
-        new_width = pantalla.get_width() // 20
-        aspect_ratio = self.y/ self.x
-        new_height = int(new_width * aspect_ratio)
-        self.imagen = pygame.transform.scale(self.imagen, (new_width, new_height))
-
-        pantalla.blit(self.imagen, self.rect)
+        pantalla.blit(self.imagen, (self.x, self.y))
     
     def morir(self):
-        print("El perro", self.nombre, "ha muerto")
+            print("El perro", self.nombre, "ha muerto")
         
     # Método para mostrar la información del perro
     def info(self):
-        print(self.nombre, self.raza.value, self.color, self.energia)
+            print(self.nombre, self.raza.value, self.color, self.energia)
+            
+    #Método para mover al perro
+    def mover(self, x, y):
+        self.x += x
+        self.y += y
+        
         
     # Método para que el perro ataque a otro perro
     def atacar(self, atacado):
-        if self.energia > 0:
-            atacado.energia -= self.energia // 2
-            self.energia -= atacado.energia // 4
-            print(self.nombre, "ataca a", atacado.nombre, "y le quedan",self.energia)
+            if self.energia > 0:
+                atacado.energia -= self.energia // 2
+                self.energia -= atacado.energia // 4
+                print(self.nombre, "ataca a", atacado.nombre, "y le quedan",self.energia)
     
     # GETTERS
     def get_nombre(self):

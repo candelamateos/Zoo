@@ -4,7 +4,7 @@ import pygame
 def main():
     pygame.init()
     juego = GameController()
-    juego.draw()
+    juego.run()
     pygame.quit()
 
 if __name__ == "__main__":
