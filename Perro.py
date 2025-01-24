@@ -35,8 +35,8 @@ class Perro(Animales):
     def reescalar(self, ancho, alto):
         ratio = self.y / self.x
         nuevo_ancho = ancho // 8
-        nuevo_alto = int(ancho * ratio)
-        self.imagen = pygame.transform.smoothscale(self.imagen, (ancho, alto))
+        nuevo_alto = int(nuevo_ancho * ratio)
+        self.imagen = pygame.transform.smoothscale(self.imagen, (nuevo_ancho, nuevo_alto))
     
         #Métodos heredados de la clase abstracta animal
     def dibujar(self, pantalla):
@@ -51,8 +51,9 @@ class Perro(Animales):
             
     #Método para mover al perro
     def mover(self, x, y):
-        self.x += x
-        self.y += y
+        if self.x + x >= 0 and self.y + y >= 0:
+            self.x += x
+            self.y += y
         
         
     # Método para que el perro ataque a otro perro

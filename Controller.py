@@ -22,6 +22,29 @@ import pygame
 import time
 from Perro import Perro
 
+"""""
+numeros = [1,2,3,4,5,6,7,8,9,10]
+cosas = ["manzana", 2, 1.3, -1, 10/5]
+
+cosas[2] = "gato"
+cosas.append("perro")
+cosas.insert(2, "gato")
+cosas.extend(["casa", "carro", "moto"])
+
+valor = cosas.pop()
+valor = cosas.del(2)
+
+sublista = cosas[1:3]
+
+print(cosas)
+
+nueva_lista
+for i in cosas:
+    print(i)
+    elemento = cosas.pop()
+    nueva_lista.append(elemento)
+"""""
+
 class GameController:
     def __init__(self):
         self.ROJO = (255, 0, 0)
@@ -31,6 +54,8 @@ class GameController:
         flags = pygame.RESIZABLE
         self.pantalla = pygame.display.set_mode((self.ANCHO, self.ALTO), flags)
         self.player = Perro("labrador", "Bobby", "Negro", 0.1, 0.1)
+
+        self
     
     def run(self):
         running = True
@@ -51,16 +76,16 @@ class GameController:
     def ProcesarMovimientos(self):
         teclas = pygame.key.get_pressed()
         if teclas[pygame.K_UP]:
-            self.player.mover(0,-1)
+            self.player.mover(0,-5)
             
         if teclas[pygame.K_DOWN]:
-            self.player.mover(0,1)
+            self.player.mover(0,5)
             
         if teclas[pygame.K_LEFT]:
-            self.player.mover(-1,0)
+            self.player.mover(-5,0)
             
         if teclas[pygame.K_RIGHT]:
-            self.player.mover(1,0)
+            self.player.mover(5,0)
         
     def draw(self): 
         self.pantalla.fill(self.ROJO)

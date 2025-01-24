@@ -21,7 +21,6 @@ class Colacao(Objetos):
     def __init__(self, x, y, jaula, energia):
         super().__init__(x, y, jaula, 5)
 
-
 class Trampa(Objetos):
     def __init__(self, x, y, jaula, energia):
         super().__init__(x, y, jaula, -15)
