@@ -2,7 +2,6 @@ import pygame
 from enum import Enum
 from Animales import Animales
 
-
 class Raza(Enum):
     LABRADOR = "labrador"
     PASTOR_ALEMAN = "pastor aleman"
@@ -20,7 +19,6 @@ class Perro(Animales):
         self.imagen = pygame.transform.scale(self.imagen, (100, 100))
         self.x = x
         self.y = y
-        #self.reescalar(100, 100)
 
         # Asignación de la energía según la raza
         if self.raza.value == "labrador":
@@ -33,35 +31,33 @@ class Perro(Animales):
             self.energia = int(80)
             
     def reescalar(self, ancho, alto):
-        ratio = self.y / self.x
-        nuevo_ancho = ancho // 8
-        nuevo_alto = int(nuevo_ancho * ratio)
-        self.imagen = pygame.transform.smoothscale(self.imagen, (nuevo_ancho, nuevo_alto))
-    
-        #Métodos heredados de la clase abstracta animal
+        nuevo_tamano = min(ancho, alto) // 8  # Use the smaller dimension
+        self.imagen = pygame.image.load("perro.webp")  # Reload the image
+        self.imagen = pygame.transform.smoothscale(self.imagen, (nuevo_tamano, nuevo_tamano))
+
+    # Métodos heredados de la clase abstracta animal
     def dibujar(self, pantalla):
         pantalla.blit(self.imagen, (self.x, self.y))
     
     def morir(self):
-            print("El perro", self.nombre, "ha muerto")
+        print("El perro", self.nombre, "ha muerto")
         
     # Método para mostrar la información del perro
     def info(self):
-            print(self.nombre, self.raza.value, self.color, self.energia)
-            
-    #Método para mover al perro
+        print(self.nombre, self.raza.value, self.color, self.energia)
+        
+    # Método para mover al perro
     def mover(self, x, y):
         if self.x + x >= 0 and self.y + y >= 0:
             self.x += x
             self.y += y
         
-        
     # Método para que el perro ataque a otro perro
     def atacar(self, atacado):
-            if self.energia > 0:
-                atacado.energia -= self.energia // 2
-                self.energia -= atacado.energia // 4
-                print(self.nombre, "ataca a", atacado.nombre, "y le quedan",self.energia)
+        if self.energia > 0:
+            atacado.energia -= self.energia // 2
+            self.energia -= atacado.energia // 4
+            print(self.nombre, "ataca a", atacado.nombre, "y le quedan", self.energia)
     
     # GETTERS
     def get_nombre(self):
