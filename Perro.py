@@ -63,9 +63,9 @@ class Perro(Animales):
         
     # Método para mover al perro
     def mover(self, x, y):
-        if self.x + x >= 0 and self.y + y >= 0:
-            self.x += x
-            self.y += y
+        if self.__x + x >= 0 and self.__y + y >= 0:
+            self.__x += x
+            self.__y += y
         
     # Método para que el perro ataque a otro perro
     def atacar(self, atacado):
