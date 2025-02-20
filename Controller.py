@@ -1,26 +1,10 @@
-"""import pygame
-import time
-
-class GameController:
-    def __init__(self):
-
-        self.ROJO = (255, 0, 0)
-        self.ANCHO = 800
-        self.ALTO = 600
-
-        flags = pygame.RESIZABLE
-        self.pantalla = pygame.display.set_mode((self.ANCHO, self.ALTO), flags)
-    
-    def draw(self): 
-        self.pantalla.fill(self.ROJO)
-        pygame.display.flip()
-
-        
-"""
-        
 import pygame
 import time
+import random
+
 from Perro import Perro
+from Objetos import Objetos
+from Objetos import Fabrica_Objetos
 
 class GameController:
     def __init__(self):
@@ -31,8 +15,17 @@ class GameController:
         flags = pygame.RESIZABLE
         self.pantalla = pygame.display.set_mode((self.ANCHO, self.ALTO), flags)
         self.player = Perro("labrador", "Bobby", "Negro", 0.1, 0.1)
+        self.objetos = self.generar_objetos()
+        self.jaulaActual = random.choice([0,5,10])
 
-    
+    def generar_objetos(self):
+        objetos = []
+        fabrica = Fabrica_Objetos()
+        for i in range(3):
+            objeto = fabrica.crearObjeto()
+            objetos.append(objeto)
+        return objetos
+
     def run(self):
         running = True
         while running:

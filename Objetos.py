@@ -5,14 +5,23 @@ import random
 class Objetos:
     def __init__(self, x, y, jaula, energia):
         
-        self.x = random.randint(jaula, jaula + 4)
-        self.y = random.randint(0,9)
-        self.jaula = jaula
-        self.energia = energia
+        self.__x = random.randint(jaula, jaula + 4)
+        self.__y = random.randint(0,9)
+        self.__jaula = jaula
+        self.__energia = energia
     
     def recoger(self):
-        self.energia = 0
-        
+        self.__energia = 0
+
+class Fabrica_Objetos():
+    def __init__(self):
+        self
+
+    def crearObjeto(self):
+        tipo_objeto = random.choice([Cocacola, Colacao, Trampa])
+        objeto_Creado = tipo_objeto(0,0,self.jaula,0)
+        return objeto_Creado    
+
 class Cocacola(Objetos):
     def __init__(self, x, y, jaula, energia):
         super().__init__(x, y, jaula, 10)
@@ -24,3 +33,4 @@ class Colacao(Objetos):
 class Trampa(Objetos):
     def __init__(self, x, y, jaula, energia):
         super().__init__(x, y, jaula, -15)
+
