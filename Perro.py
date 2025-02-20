@@ -8,6 +8,13 @@ class Raza(Enum):
     CHIHUAHUA = "chihuahua"
     HUSKY = "husky"
     
+#Atributos accesibles desde fuera de la clase y no queremos que se modifiquen
+#Inicializacion energia con diccionarios
+"""
+Diccionarios en python: Tablas hash vs listas
+
+"""
+
 class Perro(Animales):
 
     # Inicializador de la clase Perro
@@ -55,6 +62,7 @@ class Perro(Animales):
     # Método para que el perro ataque a otro perro
     def atacar(self, atacado):
         if self.energia > 0:
+            #Encapsulacion y el atacado y el perro podria tener energia negativa
             atacado.energia -= self.energia // 2
             self.energia -= atacado.energia // 4
             print(self.nombre, "ataca a", atacado.nombre, "y le quedan", self.energia)
