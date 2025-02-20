@@ -19,39 +19,54 @@ class Perro(Animales):
 
     # Inicializador de la clase Perro
     def __init__(self, raza, nombre, color, x, y):
-        self.nombre = nombre
-        self.raza = Raza(raza)
-        self.color = color
-        self.imagen = pygame.image.load("perro.webp")
-        self.imagen = pygame.transform.scale(self.imagen, (100, 100))
-        self.x = x
-        self.y = y
+        self.__nombre = nombre
+        self.__raza = Raza(raza)
+        self.__color = color
+        self.__imagen = pygame.image.load("perro.webp")
+        self.__imagen = pygame.transform.scale(self.__imagen, (100, 100))
+        self.__x = x
+        self.__y = y
 
-        # Asignación de la energía según la raza
-        if self.raza.value == "labrador":
-            self.energia = int(70)
-        elif self.raza.value == "pastor aleman":
-            self.energia = int(100)
-        elif self.raza.value == "chihuahua":
-            self.energia = int(50)
-        else:
-            self.energia = int(80)
-            
+        ENERGIAS = {
+            Raza.CHIHUAHUA: 50,
+            Raza.PASTOR_ALEMAN: 100,
+            Raza.LABRADOR: 70,
+            Raza.HUSKY: 80
+        }
+
+        self.__energia = ENERGIAS.get(self.__raza)
+
+    @property
+    def get_x(self):
+        return self.__x
+
+    @property
+    def get_y(self):
+        return self.__y    
+    
+    def set_x(self, x):
+        if(x > 0):
+            self.__x = x
+
+    def set_y(self, y):
+        if(y > 0):
+            self.__y = y
+
     def reescalar(self, ancho, alto):
         nuevo_tamano = min(ancho, alto) // 8  # Use the smaller dimension
-        self.imagen = pygame.image.load("perro.webp")  # Reload the image
-        self.imagen = pygame.transform.smoothscale(self.imagen, (nuevo_tamano, nuevo_tamano))
+        self.__imagen = pygame.image.load("perro.webp")  # Reload the image
+        self.__imagen = pygame.transform.smoothscale(self.__imagen, (nuevo_tamano, nuevo_tamano))
 
     # Métodos heredados de la clase abstracta animal
     def dibujar(self, pantalla):
-        pantalla.blit(self.imagen, (self.x, self.y))
+        pantalla.blit(self.__imagen, (self.__x, self.__y))
     
     def morir(self):
         print("El perro", self.nombre, "ha muerto")
         
     # Método para mostrar la información del perro
     def info(self):
-        print(self.nombre, self.raza.value, self.color, self.energia)
+        print(self.__nombre, self.__raza.value, self.__color, self.__energia)
         
     # Método para mover al perro
     def mover(self, x, y):
