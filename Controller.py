@@ -22,8 +22,6 @@ import pygame
 import time
 from Perro import Perro
 
-
-
 class GameController:
     def __init__(self):
         self.ROJO = (255, 0, 0)

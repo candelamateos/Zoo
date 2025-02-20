@@ -21,7 +21,6 @@ for i in cosas:
     nueva_lista.append(elemento)
 
 """""
-
 frase = "Hola esto es una prueba, probando 1 2 3"
 def contarletras(frase):
     contador = {}
@@ -32,7 +31,6 @@ def contarletras(frase):
     print(contador)
 
 #contarletras(frase)
-
 
 k = 23
 
