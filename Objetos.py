@@ -15,7 +15,8 @@ class Objetos:
 
 class Fabrica_Objetos():
     def __init__(self):
-        self
+        self.jaula = random.choice([0, 5, 10])
+
 
     def crearObjeto(self):
         tipo_objeto = random.choice([Cocacola, Colacao, Trampa])
@@ -33,4 +34,3 @@ class Colacao(Objetos):
 class Trampa(Objetos):
     def __init__(self, x, y, jaula, energia):
         super().__init__(x, y, jaula, -15)
-
