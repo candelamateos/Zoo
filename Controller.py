@@ -37,6 +37,8 @@ class GameController:
                     nuevo_ancho = event.w
                     nuevo_alto = event.h 
                     self.player.reescalar(nuevo_ancho, nuevo_alto)
+                    for objeto in self.objetos:
+                        objeto.reescalar(nuevo_ancho, nuevo_alto)
                     
             self.draw()
             self.ProcesarMovimientos()
@@ -59,6 +61,8 @@ class GameController:
     def draw(self): 
         self.pantalla.fill(self.ROJO)
         self.player.dibujar(self.pantalla)
+        for objeto in self.objetos:
+            objeto.dibujar(self.pantalla)
         pygame.display.flip()
         time.sleep(0.1)
 
