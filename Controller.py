@@ -1,6 +1,7 @@
 import pygame
 import time
 import random
+from datetime import datetime, timezone # Importing datetime to get current time
 
 from Perro import Perro
 from Objetos import Objetos
@@ -15,19 +16,26 @@ class GameController:
         flags = pygame.RESIZABLE
         self.pantalla = pygame.display.set_mode((self.ANCHO, self.ALTO), flags)
         self.player = Perro("labrador", "Bobby", "Negro", 0.1, 0.1)
-        self.objetos = self.generar_objetos()
+        self.objetos = []
         self.jaulaActual = random.choice([0,5,10])
         
     def get_pantalla():
         pantalla = pygame.display.get_surface().get_size()
         return pantalla
+    
     def generar_objetos(self):
-        objetos = []
-        fabrica = Fabrica_Objetos()
-        for i in range(3):
-            objeto = fabrica.crearObjeto()
-            objetos.append(objeto)
-        return objetos
+        current_time = datetime.now(timezone.utc)  # Get current UTC time
+        current_seconds = (current_time.hour * 3600 + current_time.minute * 60 + current_time.second + 3600) % 60  # Convert to Spain time (UTC+1)
+        
+        if current_seconds % 4 == 0:  # Check if seconds are even
+            i = len(self.objetos) 
+            fabrica = Fabrica_Objetos()
+            while i < 3:
+                objeto = fabrica.crearObjeto()
+                self.objetos.append(objeto)
+                i += 1
+        
+        return self.objetos
 
     def run(self):
         running = True
@@ -45,17 +53,38 @@ class GameController:
                             objeto.reescalar(nuevo_ancho, nuevo_alto)
                     except Exception as e:
                         print(f"Error al reescalar: {e}")
-
-                    
-            self.draw()
+            
             self.ProcesarMovimientos()
+            self.generar_objetos()
+            self.choque()
+            self.draw()
 
+    def colision(self, objeto, player):
+        # Get the positions and sizes of the player and object
+        player_x = player.get_x
+        player_y = player.get_y
+        objeto_x = objeto.get_x
+        objeto_y = objeto.get_y
+        
+        # Assuming both player and object are square for simplicity
+        player_size = 75  # Example size, adjust as necessary
+        objeto_size = 75  # Example size, adjust as necessary
+        
+        # Check for collision
+        if (player_x < objeto_x + objeto_size and
+            player_x + player_size > objeto_x and
+            player_y < objeto_y + objeto_size and
+            player_y + player_size > objeto_y):
+            return True
+        return False
+    
     def choque(self):
         for objeto in self.objetos:
-            if self.player.get_x() == objeto.get_x() and self.player.get_y() == objeto.get_y():
-                self.player.setenergia(objeto.get_energia())
+            if self.colision(objeto, self.player):
+                self.player.set_energia(objeto.get_energia)
                 objeto.recoger()
-
+                self.objetos.remove(objeto)
+                
     def ProcesarMovimientos(self):
         teclas = pygame.key.get_pressed()
         if teclas[pygame.K_UP]:
@@ -77,4 +106,3 @@ class GameController:
             objeto.dibujar(self.pantalla)
         pygame.display.flip()
         time.sleep(0.1)
-

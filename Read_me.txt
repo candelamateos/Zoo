@@ -11,7 +11,7 @@ habrá distintos power ups que podrás equiparte para aumentar tus probabilidade
 
 Objetos: 
     User (Jugador): Perro (Perro normal, Perro Guia o Perro Policia), energías en función de la raza
-    Game (Enemigo): 
+    Game (Enemigo):
         Jaula 1: Suricato (Animales) (Energía: 50)
         Jaula 2: Mono (Animales) (Energía: 75)
         Jaula 3: Gorila (Hereda de mono) (Energía: 125)
