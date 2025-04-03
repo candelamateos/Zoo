@@ -21,7 +21,31 @@ class Objetos:
         
     def reescalar(self, ancho, alto):
         self._imagen = pygame.transform.smoothscale(self._imagen, (ancho, alto))
-        
+
+    @property
+    def get_x(self):
+        return self.__x
+
+    @property
+    def get_y(self):
+        return self.__y   
+    
+    @property
+    def get_nombre(self):
+        return self.nombre 
+    
+    @property
+    def get_energia(self):
+        return self.__energia  # Corrected to return the private attribute
+
+
+    def set_x(self, x):
+        if(x > 0):
+            self.__x = x
+
+    def set_y(self, y):
+        if(y > 0):
+            self.__y = y
     
 
 class Fabrica_Objetos():

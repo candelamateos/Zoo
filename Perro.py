@@ -36,14 +36,25 @@ class Perro(Animales):
 
         self.__energia = ENERGIAS.get(self.__raza)
 
+ # GETTERS
+
     @property
     def get_x(self):
         return self.__x
 
     @property
     def get_y(self):
-        return self.__y    
+        return self.__y   
     
+    @property
+    def get_nombre(self):
+        return self.nombre 
+    
+    @property
+    def get_energia(self):
+        return self.energia
+
+
     def set_x(self, x):
         if(x > 0):
             self.__x = x
@@ -51,6 +62,10 @@ class Perro(Animales):
     def set_y(self, y):
         if(y > 0):
             self.__y = y
+            
+    def set_energia(self, energia):
+        if(energia > 0):
+            self.__energia += energia
 
     def reescalar(self, ancho, alto):
         nuevo_tamano = min(ancho, alto) // 8  # Use the smaller dimension
@@ -82,6 +97,4 @@ class Perro(Animales):
             self.energia -= atacado.energia // 4
             print(self.nombre, "ataca a", atacado.nombre, "y le quedan", self.energia)
     
-    # GETTERS
-    def get_nombre(self):
-        return self.nombre
+    
