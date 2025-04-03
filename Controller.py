@@ -18,6 +18,7 @@ class GameController:
         self.player = Perro("labrador", "Bobby", "Negro", 0.1, 0.1)
         self.objetos = []
         self.jaulaActual = random.choice([0,5,10])
+       
         
     def get_pantalla():
         pantalla = pygame.display.get_surface().get_size()
@@ -51,6 +52,7 @@ class GameController:
                         self.player.reescalar(nuevo_ancho, nuevo_alto)
                         for objeto in self.objetos:
                             objeto.reescalar(nuevo_ancho, nuevo_alto)
+                        
                     except Exception as e:
                         print(f"Error al reescalar: {e}")
             
@@ -102,6 +104,16 @@ class GameController:
     def draw(self): 
         self.pantalla.fill(self.ROJO)
         self.player.dibujar(self.pantalla)
+        
+        rectangulo = pygame.Surface((340,60))
+        rectangulo.fill((250,250,250))
+        fuente = pygame.font.Font("italic.ttf", 40)
+        texto = fuente.render("Energia Perro:", True, (0,0,0))
+        texto2 = fuente.render("Energia Enemigo:", True, (0,0,0))
+        self.pantalla.blit(rectangulo, (380,0))
+        self.pantalla.blit(texto, (400, 0))
+        self.pantalla.blit(texto2, (400, 30))
+
         for objeto in self.objetos:
             objeto.dibujar(self.pantalla)
         pygame.display.flip()
