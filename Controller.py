@@ -105,14 +105,14 @@ class GameController:
         self.pantalla.fill(self.ROJO)
         self.player.dibujar(self.pantalla)
         
-        rectangulo = pygame.Surface((340,60))
+        rectangulo = pygame.Surface((340,80))
         rectangulo.fill((250,250,250))
         fuente = pygame.font.Font("italic.ttf", 40)
         texto = fuente.render("Energia Perro:", True, (0,0,0))
         texto2 = fuente.render("Energia Enemigo:", True, (0,0,0))
         self.pantalla.blit(rectangulo, (380,0))
-        self.pantalla.blit(texto, (400, 0))
-        self.pantalla.blit(texto2, (400, 30))
+        self.pantalla.blit(texto, (380, 0))
+        self.pantalla.blit(texto2, (380, 40))
 
         for objeto in self.objetos:
             objeto.dibujar(self.pantalla)
