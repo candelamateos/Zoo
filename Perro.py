@@ -24,6 +24,8 @@ class Perro(Animales):
         self.__color = color
         self.__imagen = pygame.image.load("perro.webp")
         self.__imagen = pygame.transform.scale(self.__imagen, (100, 100))
+        self.__contador_attack = 0
+        self.__sprites = self.cortar_sprites()
         self.__x = x
         self.__y = y
 
@@ -91,10 +93,24 @@ class Perro(Animales):
         
     # Método para que el perro ataque a otro perro
     def atacar(self, atacado):
-        if self.energia > 0:
+        self.__contador_attack = (self.__contador_attack + 1) % 4
+        self.__imagen = self.__sprites[self.__contador_attack]
+        if self.__energia > 0:
             #Encapsulacion y el atacado y el perro podria tener energia negativa
-            atacado.energia -= self.energia // 2
-            self.energia -= atacado.energia // 4
-            print(self.nombre, "ataca a", atacado.nombre, "y le quedan", self.energia)
-    
+            atacado.set_energia(-self.__energia // 2)
+            self.__energia -= (atacado.get_energia // 4)
+        
+    def cortar_sprites(self):
+        # Cargar la imagen de sprites
+        self.__sprites = pygame.image.load(r"Sprites/Perro/Attack.png")
+        
+        # Obtener el tamaño de cada sprite
+        sprite_width = self.__sprites.get_width() // 4
+        sprite_height = self.__sprites.get_height() // 4
+        Attack = []
+        # Cortar en 4 sprites
+        for i in range(4):
+            sprite = self.__sprites.subsurface((i * sprite_width, 0, sprite_width, sprite_height))
+            Attack.append(sprite)
+        return Attack
     
