@@ -22,10 +22,10 @@ class Perro(Animales):
         self.__nombre = nombre
         self.__raza = Raza(raza)
         self.__color = color
-        self.__imagen = pygame.image.load("perro.webp")
-        self.__imagen = pygame.transform.scale(self.__imagen, (100, 100))
         self.__contador_attack = 0
-        self.__sprites = self.cortar_sprites()
+        self.__sprites = self.cortar_sprites(r"Sprites/Perro/Walk.png", 6)
+        self.__imagen = self.__sprites[0]
+        self.__imagen = pygame.transform.scale(self.__imagen, (100, 100))
         self.__x = x
         self.__y = y
 
@@ -71,7 +71,8 @@ class Perro(Animales):
 
     def reescalar(self, ancho, alto):
         nuevo_tamano = min(ancho, alto) // 8  # Use the smaller dimension
-        self.__imagen = pygame.image.load("perro.webp")  # Reload the image
+        self.__sprites = self.cortar_sprites(r"Sprites/Perro/Walk.png", 6)
+        self.__imagen = self.__sprites[self.__contador_attack]
         self.__imagen = pygame.transform.smoothscale(self.__imagen, (nuevo_tamano, nuevo_tamano))
 
     # Métodos heredados de la clase abstracta animal
@@ -79,7 +80,7 @@ class Perro(Animales):
         pantalla.blit(self.__imagen, (self.__x, self.__y))
     
     def morir(self):
-        print("El perro", self.nombre, "ha muerto")
+       self.__sprites = self.cortar_sprites(r"Sprites/Perro/Death.png", 4)
         
     # Método para mostrar la información del perro
     def info(self):
@@ -90,6 +91,9 @@ class Perro(Animales):
         if self.__x + x >= 0 and self.__y + y >= 0:
             self.__x += x
             self.__y += y
+            self.__contador_attack += 1
+            self.__contador_attack = self.__contador_attack % 4
+            self.__imagen = self.__sprites[self.__contador_attack]
         
     # Método para que el perro ataque a otro perro
     def atacar(self, atacado):
@@ -100,17 +104,22 @@ class Perro(Animales):
             atacado.set_energia(-self.__energia // 2)
             self.__energia -= (atacado.get_energia // 4)
         
-    def cortar_sprites(self):
+    def cortar_sprites(self, sprite_Actual, num_sprites):
         # Cargar la imagen de sprites
-        self.__sprites = pygame.image.load(r"Sprites/Perro/Attack.png")
+        sprite_Actual = self.__sprites
+        try:
+            self.__sprites = pygame.image.load(sprite_Actual).convert_alpha()
+        except pygame.error as e:
+            print(f"Error cargando imagen: {e}")
+            return []
         
         # Obtener el tamaño de cada sprite
-        sprite_width = self.__sprites.get_width() // 4
-        sprite_height = self.__sprites.get_height() // 4
-        Attack = []
+        sprite_width = self.__sprites.get_width() // num_sprites
+        sprite_height = self.__sprites.get_height() 
+        sprites = []
         # Cortar en 4 sprites
-        for i in range(4):
+        for i in range(num_sprites):
             sprite = self.__sprites.subsurface((i * sprite_width, 0, sprite_width, sprite_height))
-            Attack.append(sprite)
-        return Attack
+            sprites.append(sprite)
+        return sprites
     
