@@ -6,6 +6,7 @@ from datetime import datetime, timezone # Importing datetime to get current time
 from Perro import Perro
 from Objetos import Objetos
 from Objetos import Fabrica_Objetos
+from Suricato import Suricato
 
 class GameController:
     def __init__(self):
@@ -16,6 +17,7 @@ class GameController:
         flags = pygame.RESIZABLE
         self.pantalla = pygame.display.set_mode((self.ANCHO, self.ALTO), flags)
         self.player = Perro("labrador", "Bobby", "Negro", 0.1, 0.1)
+        self.enemy = Suricato("Juanito")
         self.objetos = []
         self.jaulaActual = random.choice([0,5,10])
        
@@ -100,6 +102,9 @@ class GameController:
             
         if teclas[pygame.K_RIGHT]:
             self.player.mover(5,0)
+            
+        if teclas[pygame.K_SPACE]:
+            self.player.atacar(self.enemy)
         
     def draw(self): 
         self.pantalla.fill(self.ROJO)
