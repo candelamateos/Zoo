@@ -61,6 +61,13 @@ class GameController:
             self.ProcesarMovimientos()
             self.generar_objetos()
             self.choque()
+            self.player.info()
+            if self.player.get_energia <= 0:
+                for i in range(4):
+                    self.player.morir(i)
+                    self.draw()
+                    time.sleep(1)
+                running = False
             self.draw()
 
     def colision(self, objeto, player):

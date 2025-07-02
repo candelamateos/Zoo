@@ -61,7 +61,7 @@ class Fabrica_Objetos():
 class Cocacola(Objetos):
     def __init__(self, x, y, jaula, energia):
         self._imagen = pygame.image.load(r"Objetos/Cocacola.png")
-        super().__init__(x, y, jaula, 10, self._imagen)
+        super().__init__(x, y, jaula, 5, self._imagen)
         
     
     def reescalar(self, ancho, alto):
@@ -83,7 +83,7 @@ class Colacao(Objetos):
 class Trampa(Objetos):
     def __init__(self, x, y, jaula, energia):
         self._imagen = pygame.image.load(r"Objetos/Trampa.png")
-        super().__init__(x, y, jaula, -15, self._imagen)
+        super().__init__(x, y, jaula, -100, self._imagen)
         
     
     def reescalar(self, ancho, alto):

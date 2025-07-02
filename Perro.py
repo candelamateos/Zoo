@@ -1,4 +1,5 @@
 import pygame
+import time
 from enum import Enum
 from Animales import Animales
 
@@ -23,6 +24,7 @@ class Perro(Animales):
         self.__raza = Raza(raza)
         self.__color = color
         self.__contador_attack = 0
+        
         self.__sprites = self.cortar_sprites(r"Sprites/Perro/Walk.png", 6)
         self.__imagen = self.__sprites[0]
         self.__imagen = pygame.transform.scale(self.__imagen, (100, 100))
@@ -50,11 +52,11 @@ class Perro(Animales):
     
     @property
     def get_nombre(self):
-        return self.nombre 
+        return self.__nombre 
     
     @property
     def get_energia(self):
-        return self.energia
+        return self.__energia
 
 
     def set_x(self, x):
@@ -66,8 +68,7 @@ class Perro(Animales):
             self.__y = y
             
     def set_energia(self, energia):
-        if(energia > 0):
-            self.__energia += energia
+        self.__energia += energia
 
     def reescalar(self, ancho, alto):
         nuevo_tamano = min(ancho, alto) // 8  # Use the smaller dimension
@@ -79,8 +80,9 @@ class Perro(Animales):
     def dibujar(self, pantalla):
         pantalla.blit(self.__imagen, (self.__x, self.__y))
     
-    def morir(self):
+    def morir(self, num_Imagen):
        self.__sprites = self.cortar_sprites(r"Sprites/Perro/Death.png", 4)
+       self.__imagen = self.__sprites[num_Imagen]
         
     # Método para mostrar la información del perro
     def info(self):
@@ -106,7 +108,7 @@ class Perro(Animales):
         
     def cortar_sprites(self, sprite_Actual, num_sprites):
         # Cargar la imagen de sprites
-        sprite_Actual = self.__sprites
+       # sprite_Actual = self.__sprites
         try:
             self.__sprites = pygame.image.load(sprite_Actual).convert_alpha()
         except pygame.error as e:
