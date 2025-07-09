@@ -16,7 +16,7 @@ class GameController:
 
         flags = pygame.RESIZABLE
         self.pantalla = pygame.display.set_mode((self.ANCHO, self.ALTO), flags)
-        self.player = Perro("labrador", "Bobby", "Negro", 0.1, 0.1)
+        self.player = Perro("labrador", "Bobby", "Negro", 0.1, 42)
         self.enemy = Suricato("Juanito")
         self.objetos = []
         self.jaulaActual = random.choice([0,5,10])
@@ -51,6 +51,9 @@ class GameController:
                     nuevo_ancho = event.w
                     nuevo_alto = event.h 
                     try:
+                        self.ANCHO = nuevo_ancho
+                        self.ALTO = nuevo_alto 
+
                         self.player.reescalar(nuevo_ancho, nuevo_alto)
                         for objeto in self.objetos:
                             objeto.reescalar(nuevo_ancho, nuevo_alto)
@@ -117,14 +120,18 @@ class GameController:
         self.pantalla.fill(self.ROJO)
         self.player.dibujar(self.pantalla)
         
-        rectangulo = pygame.Surface((340,80))
+        rectangulo = pygame.Surface((self.ANCHO // 1.3, self.ALTO // 7))
         rectangulo.fill((250,250,250))
         fuente = pygame.font.Font("italic.ttf", 40)
-        texto = fuente.render("Energia Perro:", True, (0,0,0))
-        texto2 = fuente.render("Energia Enemigo:", True, (0,0,0))
-        self.pantalla.blit(rectangulo, (380,0))
-        self.pantalla.blit(texto, (380, 0))
-        self.pantalla.blit(texto2, (380, 40))
+
+        str_perro = str(self.player.get_energia)
+        texto = fuente.render("Energia Perro:" + " " + str_perro, True, (0,0,0))
+        str_enemigo = str(self.enemy.get_energia)
+        texto2 = fuente.render("Energia Enemigo:" + " " + str_enemigo, True, (0,0,0))
+       
+        self.pantalla.blit(rectangulo, (self.ANCHO - 420, 0))
+        self.pantalla.blit(texto, (self.ANCHO - 400, 0))
+        self.pantalla.blit(texto2, (self.ANCHO - 400, 40))
 
         for objeto in self.objetos:
             objeto.dibujar(self.pantalla)

@@ -90,7 +90,7 @@ class Perro(Animales):
         
     # Método para mover al perro
     def mover(self, x, y):
-        if self.__x + x >= 0 and self.__y + y >= 0:
+        if self.__x + x >= 0 and self.__y + y >= 40:
             self.__x += x
             self.__y += y
             self.__contador_attack += 1
