@@ -19,7 +19,7 @@ Diccionarios en python: Tablas hash vs listas
 class Perro(Animales):
 
     # Inicializador de la clase Perro
-    def __init__(self, raza, nombre, color, x, y):
+    def __init__(self, raza, nombre, color, x, y, pantalla):
         self.__nombre = nombre
         self.__raza = Raza(raza)
         self.__color = color
@@ -30,6 +30,7 @@ class Perro(Animales):
         self.__imagen = pygame.transform.scale(self.__imagen, (100, 100))
         self.__x = x
         self.__y = y
+        self.__pantalla = pantalla
 
         ENERGIAS = {
             Raza.CHIHUAHUA: 50,
@@ -90,12 +91,13 @@ class Perro(Animales):
         
     # Método para mover al perro
     def mover(self, x, y):
-        if self.__x + x >= 0 and self.__y + y >= 40:
+        if self.__x + x >= 0 and self.__y + y >= 0:
             self.__x += x
             self.__y += y
             self.__contador_attack += 1
             self.__contador_attack = self.__contador_attack % 4
             self.__imagen = self.__sprites[self.__contador_attack]
+            
         
     # Método para que el perro ataque a otro perro
     def atacar(self, atacado):

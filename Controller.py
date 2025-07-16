@@ -16,13 +16,15 @@ class GameController:
 
         flags = pygame.RESIZABLE
         self.pantalla = pygame.display.set_mode((self.ANCHO, self.ALTO), flags)
-        self.player = Perro("labrador", "Bobby", "Negro", 0.1, 42)
+        self.player = Perro("labrador", "Bobby", "Negro", 0.1, 42, self.get_pantalla())
         self.enemy = Suricato("Juanito")
         self.objetos = []
         self.jaulaActual = random.choice([0,5,10])
+        self.__rectangulo_pos = (self.ANCHO - 420, 0)
+        self.__rectangulo_size = (self.ANCHO// 1.3, self.ALTO // 7)
        
         
-    def get_pantalla():
+    def get_pantalla(self):
         pantalla = pygame.display.get_surface().get_size()
         return pantalla
     
@@ -64,15 +66,15 @@ class GameController:
             self.ProcesarMovimientos()
             self.generar_objetos()
             self.choque()
-            self.player.info()
             if self.player.get_energia <= 0:
                 for i in range(4):
                     self.player.morir(i)
                     self.draw()
                     time.sleep(1)
                 running = False
+            self.limites()
             self.draw()
-
+    
     def colision(self, objeto, player):
         # Get the positions and sizes of the player and object
         player_x = player.get_x
@@ -91,7 +93,31 @@ class GameController:
             player_y + player_size > objeto_y):
             return True
         return False
+        
+    def colision_rect(self, player, rectangulo_pos, rectangulo_size):
+        player_x = player.get_x
+        player_y = player.get_y
+        rect_x, rect_y = rectangulo_pos
+        rect_width, rect_height = rectangulo_size
     
+        # Tamaños (puedes obtenerlos también con métodos si los tienes)
+        player_size = 75
+        rect_size = 75
+    
+    # Comprobación de colisión tipo AABB (Axis-Aligned Bounding Box)
+        if (player_x < rect_x + rect_size and
+            player_x + player_size > rect_x and
+            player_y < rect_y + rect_size and
+            player_y + player_size > rect_y):
+            return True
+        return False
+   
+    def limites(self):
+        if self.colision_rect(self.player, self.__rectangulo_pos, self.__rectangulo_size):
+            retroceso = self.player.get_x
+            self.player.mover(-retroceso, 0)
+        
+        
     def choque(self):
         for objeto in self.objetos:
             if self.colision(objeto, self.player):
@@ -122,6 +148,7 @@ class GameController:
         
         rectangulo = pygame.Surface((self.ANCHO // 1.3, self.ALTO // 7))
         rectangulo.fill((250,250,250))
+        self.__rectangulo = rectangulo
         fuente = pygame.font.Font("italic.ttf", 40)
 
         str_perro = str(self.player.get_energia)
@@ -130,6 +157,8 @@ class GameController:
         texto2 = fuente.render("Energia Enemigo:" + " " + str_enemigo, True, (0,0,0))
        
         self.pantalla.blit(rectangulo, (self.ANCHO - 420, 0))
+        self.__rectangulo_pos = (self.ANCHO - 420, 0)
+        self.__rectangulo_size = (self.ANCHO // 1.3 , self.ALTO // 7)
         self.pantalla.blit(texto, (self.ANCHO - 400, 0))
         self.pantalla.blit(texto2, (self.ANCHO - 400, 40))
 
